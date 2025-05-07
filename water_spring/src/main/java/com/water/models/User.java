@@ -3,101 +3,124 @@ package com.water.models;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.index.Indexed;
+import java.util.Date;
 
+/**
+ * Classe représentant un utilisateur dans l'application Eau+ Livraison
+ * Stockée dans la collection "users" de MongoDB
+ */
 @Document(collection = "users")
 public class User {
 
     @Id
     private String id;
 
-    private String firstName;
-    private String lastName;
+    private String name;
 
     @Indexed(unique = true)
     private String email;
 
-    private String password;
-    private String phoneNumber;
-    private String role = "USER"; // Par défaut
+    private String password; // Le mot de passe sera stocké après hachage
 
-    // Constructeurs
-    public User() {}
+    private String phone;
 
-    public User(String firstName, String lastName, String email, String password, String phoneNumber) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    private String address;
+
+    private String userType; // "CLIENT" ou "SUPPLIER"
+
+    private Date createdAt;
+
+    // Constructeur par défaut nécessaire pour MongoDB
+    public User() {
+        this.createdAt = new Date();
+    }
+
+    // Constructeur avec paramètres pour faciliter la création
+    public User(String name, String email, String password, String phone, String address, String userType) {
+        this.name = name;
         this.email = email;
         this.password = password;
-        this.phoneNumber = phoneNumber;
+        this.phone = phone;
+        this.address = address;
+        this.userType = userType;
+        this.createdAt = new Date();
     }
 
     // Getters et Setters
-
     public String getId() {
         return id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public String getRole() {
-        return role;
     }
 
     public void setId(String id) {
         this.id = id;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
-    // toString() optionnel pour le débogage
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id='" + id + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", role='" + role + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", userType='" + userType + '\'' +
+                ", createdAt=" + createdAt +
                 '}';
     }
 }
